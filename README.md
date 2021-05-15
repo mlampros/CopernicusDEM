@@ -1,4 +1,5 @@
 
+[![tic](https://github.com/mlampros/CopernicusDEM/workflows/tic/badge.svg?branch=master)](https://github.com/mlampros/CopernicusDEM/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/CopernicusDEM)](http://cran.r-project.org/package=CopernicusDEM)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/CopernicusDEM?color=blue)](http://www.r-pkg.org/pkg/CopernicusDEM)
 <a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
@@ -109,17 +110,17 @@ If you use the **CopernicusDEM** R package in your paper or research please cite
 
 <br>
 
-* ```R
-  @Manual{,
-    title = {{CopernicusDEM}: Copernicus Digital Elevation Models},
-    author = {Lampros Mouselimis},
-    year = {2021},
-    note = {R package version 1.0.0 produced using Copernicus
-      WorldDEMTM-90 DLR e.V. 2010-2014 and Airbus Defence and Space
-      GmbH 2014-2018 provided under COPERNICUS by the European Union
-      and ESA; all rights reserved},
-    url = {https://CRAN.R-project.org/package=CopernicusDEM},
-  }
-  ```
+```R
+@Manual{,
+  title = {{CopernicusDEM}: Copernicus Digital Elevation Models},
+  author = {Lampros Mouselimis},
+  year = {2021},
+  note = {R package version 1.0.0 produced using Copernicus
+    WorldDEMTM-90 DLR e.V. 2010-2014 and Airbus Defence and Space
+    GmbH 2014-2018 provided under COPERNICUS by the European Union
+    and ESA; all rights reserved},
+  url = {https://CRAN.R-project.org/package=CopernicusDEM},
+}
+```
 
 <br>
