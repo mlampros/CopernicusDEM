@@ -2,14 +2,14 @@
 % Please edit documentation in R/utils.R
 \name{create_VRT_from_dir}
 \alias{create_VRT_from_dir}
-\title{Create a VRT file from .tif files}
+\title{Create a Virtual Raster (VRT) file from .tif files}
 \usage{
 create_VRT_from_dir(dir_tifs, output_path_VRT, verbose = FALSE)
 }
 \arguments{
 \item{dir_tifs}{a valid path to a directory where the .tif files are saved}
 
-\item{output_path_VRT}{a valid path to a file where the VRT will be saved}
+\item{output_path_VRT}{a valid path to a file where the Virtual Raster (VRT) will be saved}
 
 \item{verbose}{a boolean. If TRUE then information will be printed out in the console}
 }
@@ -17,16 +17,16 @@ create_VRT_from_dir(dir_tifs, output_path_VRT, verbose = FALSE)
 it doesn't return an object but it saves the output to a file
 }
 \description{
-Create a VRT file from .tif files
+Create a Virtual Raster (VRT) file from .tif files
 }
 \examples{
 
 \dontrun{
 
-#....................................
-# create a directory to save the .tif
-# files and a WKT of a samplel AOI
-#....................................
+#.........................................................
+# create a directory to save the .tif files and a
+# Well Known Text (WKT) of a sample Area of Interest (AOI)
+#.........................................................
 
 DIR_SAVE = file.path(Sys.getenv('HOME'), 'DIR_SAVE_DEM')
 if (!dir.exists(DIR_SAVE)) dir.create(DIR_SAVE)
@@ -47,10 +47,10 @@ save_matches = CopernicusDEM::aoi_geom_save_tif_matches(sf_or_file = sf_obj,
                                                         threads = parallel::detectCores(),
                                                         verbose = TRUE)
 
-#............................
-# create a .VRT file from the
-# 90m downloaded .tif files
-#............................
+#........................................
+# create a Virtual Raster (VRT) file from
+# the 90 meter downloaded .tif files
+#........................................
 
 VRT_out = as.character(glue::glue("{DIR_SAVE}.vrt"))
 
@@ -58,10 +58,10 @@ res_vrt = CopernicusDEM::create_VRT_from_dir(dir_tifs = DIR_SAVE,
                                              output_path_VRT = VRT_out,
                                              verbose = TRUE)
 
-#.................................................
-# load the saved .vrt file as raster (which might
-# consist of multiple files - mosaic) and plot it
-#.................................................
+#......................................................
+# load the saved VRT file as raster (which might
+# consist of multiple files, i.e. a mosaic) and plot it
+#......................................................
 
 rst = raster::raster(VRT_out)
 sp::plot(rst)

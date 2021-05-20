@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{aoi_geom_save_tif_matches}
 \alias{aoi_geom_save_tif_matches}
-\title{Download the elevation .tif files that intersect with an input sf-AOI}
+\title{Download the elevation .tif files that intersect either with an input sf (simple features) object or with a .geojson file}
 \usage{
 aoi_geom_save_tif_matches(
   sf_or_file,
@@ -14,15 +14,15 @@ aoi_geom_save_tif_matches(
 )
 }
 \arguments{
-\item{sf_or_file}{either an 'sf' or a .geojson file specifying the AOI (Area of Interest) for which the DEM files should be downloaded}
+\item{sf_or_file}{either an 'sf'(simple features) object or a .geojson file specifying the AOI (Area of Interest) for which the Digital Elevation Models (DEM) files should be downloaded}
 
 \item{dir_save_tifs}{a valid path to a directory where the .tif files should be saved}
 
-\item{resolution}{an integer value specifying the elevation resolution. The Copernicus DEM data currently includes 90 meter and 30 meter resolution DEM's}
+\item{resolution}{an integer value specifying the elevation resolution. The Copernicus Digital ELevation Models (DEM) currently include 90 and 30 meter resolution data}
 
-\item{crs_value}{an integer value specifying the CRS value of the DEM's which is by default 4326}
+\item{crs_value}{an integer value specifying the Coordinates Reference System (CRS) value of the Digital ELevation Models (DEM) which is by default 4326}
 
-\item{threads}{an integer value specifying the number of threads to use mainly to read the .csv files from the 'inst' directory}
+\item{threads}{an integer that specifies the number of threads to use in parallel when downloading the .tif files}
 
 \item{verbose}{a boolean. If TRUE then information will be printed out in the console}
 }
@@ -30,22 +30,25 @@ aoi_geom_save_tif_matches(
 a list object of length 2
 }
 \description{
-Download the elevation .tif files that intersect with an input sf-AOI
+Download the elevation .tif files that intersect either with an input sf (simple features) object or with a .geojson file
 }
 \details{
-Based on a sample of images that I downloaded for the 90 meter resolution each file is approx. 5 MB which means in total I'll have to download 130 GB of
-data (for more than 20.000 files of all land areas worldwide), therefore download the data based on intersection of the input AOI data and the existing tile-grid of the DEM
+Download Computation time: Based on a sample of 90 meter resolution images that I downloaded each file was approximately 5 MB which means in total I had to download 130 GB of
+data (in case I intended to download all 20.000 files of the land areas worldwide). Therefore it is wise to download data based on the intersection of the input Area of Interest (AOI)
+and an existing tile-grid of the Digital Elevation Model (DEM)
 
-The 30 meter resolution .tif images are bigger in size but visually better (1.7 MB compared to 13 MB - the time to download is approx. 20 sec. compared to 1 min. and 10 sec. for a sample use case)
+The 30 meter resolution .tif images are bigger in size but visually better (approximate image size of 1.7 MB compared to 13 MB). The time to download 90 meter resolution data is approximately
+20 seconds compared to 1 minute and 10 seconds of the 30 meter resolution data (for a sample use case)
 }
 \examples{
 
 \dontrun{
 
-#....................................
+#.......................................
 # create a directory to save the .tif
-# files and a WKT of a samplel AOI
-#....................................
+# files based on a Well Known Text (WKT)
+# of a sample Area of Interest (AOI)
+#.......................................
 
 DIR_SAVE = file.path(Sys.getenv('HOME'), 'DIR_SAVE_DEM')
 if (!dir.exists(DIR_SAVE)) dir.create(DIR_SAVE)

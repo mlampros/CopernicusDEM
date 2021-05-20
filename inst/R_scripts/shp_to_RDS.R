@@ -1,4 +1,7 @@
 
+####################################################################################
+# First Download the 'grid30.zip' and 'grid90.zip' files from my Datasets repository   [ https://github.com/mlampros/DataSets ]
+####################################################################################
 
 #.............................................................   Pre-Processing code snippets to save 1st. the .csv and .geojson files and then 2nd. to convert to .RDS objects
 # Copernicus DEM products of either resolution 30 or 90

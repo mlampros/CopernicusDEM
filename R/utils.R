@@ -1,4 +1,6 @@
 
+utils::globalVariables(c('i'))                        # for the foreach for-loop
+
 
 #' inner function of 'compute_elapsed_time'
 #'
@@ -33,20 +35,21 @@ compute_elapsed_time = function(time_start) {
 }
 
 
-#' Download the elevation .tif files that intersect with an input sf-AOI
+#' Download the elevation .tif files that intersect either with an input sf (simple features) object or with a .geojson file
 #'
-#' @param sf_or_file either an 'sf' or a .geojson file specifying the AOI (Area of Interest) for which the DEM files should be downloaded
+#' @param sf_or_file either an 'sf'(simple features) object or a .geojson file specifying the AOI (Area of Interest) for which the Digital Elevation Models (DEM) files should be downloaded
 #' @param dir_save_tifs a valid path to a directory where the .tif files should be saved
-#' @param resolution an integer value specifying the elevation resolution. The Copernicus DEM data currently includes 90 meter and 30 meter resolution DEM's
-#' @param crs_value an integer value specifying the CRS value of the DEM's which is by default 4326
-#' @param threads an integer value specifying the number of threads to use mainly to read the .csv files from the 'inst' directory
+#' @param resolution an integer value specifying the elevation resolution. The Copernicus Digital ELevation Models (DEM) currently include 90 and 30 meter resolution data
+#' @param crs_value an integer value specifying the Coordinates Reference System (CRS) value of the Digital ELevation Models (DEM) which is by default 4326
+#' @param threads an integer that specifies the number of threads to use in parallel when downloading the .tif files
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
 #' @return a list object of length 2
 #'
 #' @importFrom glue glue
 #' @importFrom sf st_read st_intersects
 #' @importFrom utils flush.console
-#'
+#' @importFrom doParallel registerDoParallel
+#' @import foreach
 #'
 #' @references
 #'
@@ -58,19 +61,22 @@ compute_elapsed_time = function(time_start) {
 #'
 #' @details
 #'
-#' Based on a sample of images that I downloaded for the 90 meter resolution each file is approx. 5 MB which means in total I'll have to download 130 GB of
-#' data (for more than 20.000 files of all land areas worldwide), therefore download the data based on intersection of the input AOI data and the existing tile-grid of the DEM
+#' Download Computation time: Based on a sample of 90 meter resolution images that I downloaded each file was approximately 5 MB which means in total I had to download 130 GB of
+#' data (in case I intended to download all 20.000 files of the land areas worldwide). Therefore it is wise to download data based on the intersection of the input Area of Interest (AOI)
+#' and an existing tile-grid of the Digital Elevation Model (DEM)
 #'
-#' The 30 meter resolution .tif images are bigger in size but visually better (1.7 MB compared to 13 MB - the time to download is approx. 20 sec. compared to 1 min. and 10 sec. for a sample use case)
+#' The 30 meter resolution .tif images are bigger in size but visually better (approximate image size of 1.7 MB compared to 13 MB). The time to download 90 meter resolution data is approximately
+#' 20 seconds compared to 1 minute and 10 seconds of the 30 meter resolution data (for a sample use case)
 #'
 #' @examples
 #'
 #' \dontrun{
 #'
-#' #....................................
+#' #.......................................
 #' # create a directory to save the .tif
-#' # files and a WKT of a samplel AOI
-#' #....................................
+#' # files based on a Well Known Text (WKT)
+#' # of a sample Area of Interest (AOI)
+#' #.......................................
 #'
 #' DIR_SAVE = file.path(Sys.getenv('HOME'), 'DIR_SAVE_DEM')
 #' if (!dir.exists(DIR_SAVE)) dir.create(DIR_SAVE)
@@ -102,7 +108,6 @@ compute_elapsed_time = function(time_start) {
 #'                                                         threads = parallel::detectCores(),
 #'                                                         verbose = TRUE)
 #' }
-
 
 aoi_geom_save_tif_matches = function(sf_or_file,
                                      dir_save_tifs,
@@ -153,9 +158,32 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 
   if (threads > 1 & LEN > 1) {
     if (verbose) cat(glue::glue("Parallel download of the  {LEN}  .tif files using  {threads}  threads starts ..."), '\n')
-    par_downl = parallel::mclapply(1:LEN, function(FILE) {
-      save_file_iter = system2(command = 'aws', args = c( 's3', 'cp', tifs_aoi[FILE], file.path(dir_save_tifs, basename(tifs_aoi[FILE]))), stdout = T, stderr = T)
-    }, mc.cores = threads)
+
+    if (.Platform$OS.type == "unix") {
+      doParallel::registerDoParallel(cores = threads)
+    }
+
+    if (.Platform$OS.type == "windows") {
+      cl = parallel::makePSOCKcluster(threads)
+      doParallel::registerDoParallel(cl = cl)            # compared to unix, ".. if not specified, on Windows a three worker cluster is created and used .." [ see also: https://stackoverflow.com/a/45122448/8302386 ]
+    }
+
+    par_downl = foreach::foreach(i = 1:LEN) %dopar% {
+      save_file_iter = system2(command = 'aws', args = c( 's3', 'cp', tifs_aoi[i], file.path(dir_save_tifs, basename(tifs_aoi[i]))), stdout = T, stderr = T)
+    }
+
+    if (.Platform$OS.type == "windows") {
+      parallel::stopCluster(cl = cl)
+    }
+
+    #............................................................. keep this as a reference ( forking using mclapply() however foreach works for both unix and windows )
+    # par_downl = parallel::mclapply(1:LEN, function(FILE) {
+    #   save_file_iter = system2(command = 'aws',
+    #                            args = c( 's3', 'cp', tifs_aoi[FILE], file.path(dir_save_tifs, basename(tifs_aoi[FILE]))),
+    #                            stdout = T,
+    #                            stderr = T)
+    # }, mc.cores = threads)
+    #.............................................................
   }
   else {
     if (verbose) cat("The single .tif file will be downloaded ...\n")
@@ -177,10 +205,10 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 
 
 
-#' Create a VRT file from .tif files
+#' Create a Virtual Raster (VRT) file from .tif files
 #'
 #' @param dir_tifs a valid path to a directory where the .tif files are saved
-#' @param output_path_VRT a valid path to a file where the VRT will be saved
+#' @param output_path_VRT a valid path to a file where the Virtual Raster (VRT) will be saved
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
 #' @return it doesn't return an object but it saves the output to a file
 #'
@@ -193,10 +221,10 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 #'
 #' \dontrun{
 #'
-#' #....................................
-#' # create a directory to save the .tif
-#' # files and a WKT of a samplel AOI
-#' #....................................
+#' #.........................................................
+#' # create a directory to save the .tif files and a
+#' # Well Known Text (WKT) of a sample Area of Interest (AOI)
+#' #.........................................................
 #'
 #' DIR_SAVE = file.path(Sys.getenv('HOME'), 'DIR_SAVE_DEM')
 #' if (!dir.exists(DIR_SAVE)) dir.create(DIR_SAVE)
@@ -217,10 +245,10 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 #'                                                         threads = parallel::detectCores(),
 #'                                                         verbose = TRUE)
 #'
-#' #............................
-#' # create a .VRT file from the
-#' # 90m downloaded .tif files
-#' #............................
+#' #........................................
+#' # create a Virtual Raster (VRT) file from
+#' # the 90 meter downloaded .tif files
+#' #........................................
 #'
 #' VRT_out = as.character(glue::glue("{DIR_SAVE}.vrt"))
 #'
@@ -228,10 +256,10 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 #'                                              output_path_VRT = VRT_out,
 #'                                              verbose = TRUE)
 #'
-#' #.................................................
-#' # load the saved .vrt file as raster (which might
-#' # consist of multiple files - mosaic) and plot it
-#' #.................................................
+#' #......................................................
+#' # load the saved VRT file as raster (which might
+#' # consist of multiple files, i.e. a mosaic) and plot it
+#' #......................................................
 #'
 #' rst = raster::raster(VRT_out)
 #' sp::plot(rst)
