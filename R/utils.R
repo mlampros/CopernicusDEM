@@ -270,7 +270,7 @@ create_VRT_from_dir = function(dir_tifs,
                                output_path_VRT,
                                verbose = FALSE) {
 
-  lst_vrt = list.files(dir_tifs, pattern = '.tif', full.names = T)
+  lst_vrt = list.files(dir_tifs, pattern = '.tif$', full.names = T)
 
   if (verbose) cat(glue::glue("The VRT Mosaic will be built from  {length(lst_vrt)}   .tif files and will be saved in  '{output_path_VRT}' ..."), '\n')
   vrt_mosaic = gdalUtils::gdalbuildvrt(gdalfile = lst_vrt,
