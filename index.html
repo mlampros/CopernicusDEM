@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CopernicusDEM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mlampros/CopernicusDEM/">
+  <a href="https://github.com/mlampros/CopernicusDEM/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,11 +79,11 @@
   <div class="contents col-md-9">
 
 
-<div id="copernicusdem" class="section level2">
-<h2 class="hasAnchor">
-<a href="#copernicusdem" class="anchor"></a>CopernicusDEM</h2>
+<div class="section level2">
+<h2 id="copernicusdem">CopernicusDEM<a class="anchor" aria-label="anchor" href="#copernicusdem"></a>
+</h2>
 <p><br></p>
-<p>Copernicus Digital Elevation Model datasets (DEM) of 90 and 30 meters resolution using the ‘awscli’ command line tool. The Copernicus (DEM) is included in the Registry of Open Data on AWS. Details on how to use the R package can be found both in the Vignette and in the <a href="http://mlampros.github.io/2021/05/21/copernicusDEM_package/">blog post</a>.</p>
+<p>Copernicus Digital Elevation Model datasets (DEM) of 90 and 30 meters resolution using the ‘awscli’ command line tool. The Copernicus (DEM) is included in the Registry of Open Data on AWS. Details on how to use the R package can be found both in the Vignette and in the <a href="http://mlampros.github.io/2021/05/21/copernicusDEM_package/" class="external-link">blog post</a>.</p>
 <p><br></p>
 <p><strong>System Requirements</strong>:</p>
 <p>This R package uses the command line <strong>awscli</strong> internally, which has to be installed first in the Operating System.</p>
@@ -118,23 +114,23 @@
 <p><br></p>
 <p>To install the package from CRAN use,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"CopernicusDEM"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"CopernicusDEM"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <p>and to download the latest version of the package from Github,</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'mlampros/CopernicusDEM'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'mlampros/CopernicusDEM'</span><span class="op">)</span></code></pre></div>
 <p><br></p>
-<div id="citation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation:</h3>
+<div class="section level3">
+<h3 id="citation">Citation:<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
 <p><br></p>
 <p>If you use the <strong>CopernicusDEM</strong> R package in your paper or research please cite:</p>
 <p><br></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">@</span>Manual{,</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  title =<span class="st"> </span>{{CopernicusDEM}<span class="op">:</span><span class="st"> </span>Copernicus Digital Elevation Models},</span>
 <span id="cb10-3"><a href="#cb10-3"></a>  author =<span class="st"> </span>{Lampros Mouselimis},</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  year =<span class="st"> </span>{<span class="dv">2021</span>},</span>
-<span id="cb10-5"><a href="#cb10-5"></a>  note =<span class="st"> </span>{R package version <span class="dv">1</span>.<span class="fl">0.0</span> produced using Copernicus</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  year =<span class="st"> </span>{<span class="dv">2022</span>},</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  note =<span class="st"> </span>{R package version <span class="dv">1</span>.<span class="fl">0.2</span> produced using Copernicus</span>
 <span id="cb10-6"><a href="#cb10-6"></a>    WorldDEMTM<span class="dv">-90</span> DLR e.V. <span class="dv">2010-2014</span> and Airbus Defence and Space</span>
 <span id="cb10-7"><a href="#cb10-7"></a>    GmbH <span class="dv">2014-2018</span> provided under COPERNICUS by the European Union</span>
 <span id="cb10-8"><a href="#cb10-8"></a>    and ESA; all rights reserved},</span>
@@ -148,53 +144,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=CopernicusDEM">https://​cloud.r-project.org/​package=CopernicusDEM</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/mlampros/CopernicusDEM/">https://​github.com/​mlampros/​CopernicusDEM/​</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing CopernicusDEM</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Lampros Mouselimis <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0002-8024-1546" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=CopernicusDEM" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/mlampros/CopernicusDEM/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlampros/CopernicusDEM/actions"><img src="https://github.com/mlampros/CopernicusDEM/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
-<li><a href="http://cran.r-project.org/package=CopernicusDEM"><img src="http://www.r-pkg.org/badges/version/CopernicusDEM" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://www.r-pkg.org/pkg/CopernicusDEM"><img src="http://cranlogs.r-pkg.org/badges/grand-total/CopernicusDEM?color=blue" alt="Downloads"></a></li>
-<li><a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px"></a></li>
-<li><a href="https://cran.r-project.org/package=CopernicusDEM"><img src="https://tinyverse.netlify.com/badge/CopernicusDEM" alt="Dependencies"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing CopernicusDEM</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Lampros Mouselimis <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0002-8024-1546" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mlampros/CopernicusDEM/actions" class="external-link"><img src="https://github.com/mlampros/CopernicusDEM/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
+<li><a href="http://cran.r-project.org/package=CopernicusDEM" class="external-link"><img src="http://www.r-pkg.org/badges/version/CopernicusDEM" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://www.r-pkg.org/pkg/CopernicusDEM" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/CopernicusDEM?color=blue" alt="Downloads"></a></li>
+<li><a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank" class="external-link"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px"></a></li>
+<li><a href="https://cran.r-project.org/package=CopernicusDEM" class="external-link"><img src="https://tinyverse.netlify.com/badge/CopernicusDEM" alt="Dependencies"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Lampros Mouselimis.</p>
+  <p></p>
+<p>Developed by Lampros Mouselimis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -202,6 +203,8 @@
 
   
 
+
+  
 
   </body>
 </html>
