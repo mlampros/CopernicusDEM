@@ -2,7 +2,7 @@ Package: CopernicusDEM
 Type: Package
 Title: Copernicus Digital Elevation Models
 Version: 1.0.2
-Date: 2021-06-16
+Date: 2022-02-06
 Authors@R: c( person(given = "Lampros", family = "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "https://orcid.org/0000-0002-8024-1546")))
 URL: https://github.com/mlampros/CopernicusDEM
 Description: Copernicus Digital Elevation Model datasets (DEM) of 90 and 30 meters resolution using the 'awscli' command line tool. The Copernicus (DEM) is included in the Registry of Open Data on 'AWS (Amazon Web Services)' and represents the surface of the Earth including buildings, infrastructure and vegetation.
@@ -15,10 +15,9 @@ Imports:
     glue,
     sf, 
     utils,
-    gdalUtils,
     doParallel,
     foreach
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     rmarkdown,
     knitr,

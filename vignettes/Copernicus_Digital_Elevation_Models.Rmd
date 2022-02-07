@@ -23,7 +23,7 @@ In this vignette I'll explain how to use the [CopernicusDEM](https://CRAN.R-proj
 
 <br>
 
-The following wrapped code snippet creates the [leaflet](https://github.com/rstudio/leaflet) and [tmap](https://github.com/mtennekes/tmap) maps of this vignette, and it does the following:
+The following wrapped code snippet creates the [leaflet](https://github.com/rstudio/leaflet) and [tmap](https://github.com/r-tmap/tmap) maps of this vignette, and it does the following:
 
 * it loads the required files (**Alberta_Wolves.csv** and **Mountain_caribou.csv**)
 * it iterates over the files

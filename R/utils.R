@@ -209,11 +209,12 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 #'
 #' @param dir_tifs a valid path to a directory where the .tif files are saved
 #' @param output_path_VRT a valid path to a file where the Virtual Raster (VRT) will be saved
+#' @param file_extension a character string specifying the image file extension from which the .vrt file will be built
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
 #' @return it doesn't return an object but it saves the output to a file
 #'
 #' @importFrom glue glue
-#' @importFrom gdalUtils gdalbuildvrt
+#' @importFrom sf gdal_utils
 #'
 #' @export
 #'
@@ -268,14 +269,19 @@ aoi_geom_save_tif_matches = function(sf_or_file,
 
 create_VRT_from_dir = function(dir_tifs,
                                output_path_VRT,
+                               file_extension = '.tif',
                                verbose = FALSE) {
 
-  lst_vrt = list.files(dir_tifs, pattern = '.tif$', full.names = T)
+  if (verbose) t_start = proc.time()
+  lst_vrt = list.files(dir_tifs, pattern = file_extension, full.names = T)
+  if (length(lst_vrt) == 0) stop(glue::glue("The directory '{dir_tifs}' does not include any files of extension '{file_extension}'!"), call. = F)
 
-  if (verbose) cat(glue::glue("The VRT Mosaic will be built from  {length(lst_vrt)}   .tif files and will be saved in  '{output_path_VRT}' ..."), '\n')
-  vrt_mosaic = gdalUtils::gdalbuildvrt(gdalfile = lst_vrt,
-                                       output.vrt = output_path_VRT,
-                                       separate = FALSE,
-                                       verbose = verbose)
+  if (verbose) cat(glue::glue("The VRT Mosaic will be built from  {length(lst_vrt)}  '{file_extension}' files and will be saved in  '{output_path_VRT}' ..."), '\n')
+  vrt_mosaic = sf::gdal_utils(util = 'buildvrt',
+                              source = lst_vrt,
+                              destination = output_path_VRT,
+                              quiet = !verbose)
+
+  if (verbose) compute_elapsed_time(t_start)
 }
 

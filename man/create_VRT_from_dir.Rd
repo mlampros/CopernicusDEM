@@ -4,12 +4,19 @@
 \alias{create_VRT_from_dir}
 \title{Create a Virtual Raster (VRT) file from .tif files}
 \usage{
-create_VRT_from_dir(dir_tifs, output_path_VRT, verbose = FALSE)
+create_VRT_from_dir(
+  dir_tifs,
+  output_path_VRT,
+  file_extension = ".tif",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dir_tifs}{a valid path to a directory where the .tif files are saved}
 
 \item{output_path_VRT}{a valid path to a file where the Virtual Raster (VRT) will be saved}
+
+\item{file_extension}{a character string specifying the image file extension from which the .vrt file will be built}
 
 \item{verbose}{a boolean. If TRUE then information will be printed out in the console}
 }
