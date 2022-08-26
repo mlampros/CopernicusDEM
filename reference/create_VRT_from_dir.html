@@ -63,12 +63,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_VRT_from_dir</span><span class="op">(</span>
-  <span class="va">dir_tifs</span>,
-  <span class="va">output_path_VRT</span>,
-  file_extension <span class="op">=</span> <span class="st">".tif"</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_VRT_from_dir</span><span class="op">(</span></span>
+<span>  <span class="va">dir_tifs</span>,</span>
+<span>  <span class="va">output_path_VRT</span>,</span>
+<span>  file_extension <span class="op">=</span> <span class="st">".tif"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,53 +98,53 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.........................................................</span></span>
-<span class="r-in"><span class="co"># create a directory to save the .tif files and a</span></span>
-<span class="r-in"><span class="co"># Well Known Text (WKT) of a sample Area of Interest (AOI)</span></span>
-<span class="r-in"><span class="co">#.........................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'HOME'</span><span class="op">)</span>, <span class="st">'DIR_SAVE_DEM'</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">WKT</span><span class="op">=</span><span class="st">'POLYGON((61.5234 27.0591, 63.6328 27.0591, 63.6328 28.1495, 61.5234 28.1495, 61.5234 27.0591))'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="va">sf_obj</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#......................</span></span>
-<span class="r-in"><span class="co"># download 90 meter DEM</span></span>
-<span class="r-in"><span class="co">#......................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu"><a href="aoi_geom_save_tif_matches.html">aoi_geom_save_tif_matches</a></span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span>
-<span class="r-in">                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>
-<span class="r-in">                                                        resolution <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#........................................</span></span>
-<span class="r-in"><span class="co"># create a Virtual Raster (VRT) file from</span></span>
-<span class="r-in"><span class="co"># the 90 meter downloaded .tif files</span></span>
-<span class="r-in"><span class="co">#........................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{DIR_SAVE}.vrt"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">create_VRT_from_dir</span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>
-<span class="r-in">                                             output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,</span>
-<span class="r-in">                                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#......................................................</span></span>
-<span class="r-in"><span class="co"># load the saved VRT file as raster (which might</span></span>
-<span class="r-in"><span class="co"># consist of multiple files, i.e. a mosaic) and plot it</span></span>
-<span class="r-in"><span class="co">#......................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="va">VRT_out</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">sp</span><span class="fu">::</span><span class="fu">plot</span><span class="op">(</span><span class="va">rst</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.........................................................</span></span></span>
+<span class="r-in"><span><span class="co"># create a directory to save the .tif files and a</span></span></span>
+<span class="r-in"><span><span class="co"># Well Known Text (WKT) of a sample Area of Interest (AOI)</span></span></span>
+<span class="r-in"><span><span class="co">#.........................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'HOME'</span><span class="op">)</span>, <span class="st">'DIR_SAVE_DEM'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">WKT</span><span class="op">=</span><span class="st">'POLYGON((61.5234 27.0591, 63.6328 27.0591, 63.6328 28.1495, 61.5234 28.1495, 61.5234 27.0591))'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="va">sf_obj</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#......................</span></span></span>
+<span class="r-in"><span><span class="co"># download 90 meter DEM</span></span></span>
+<span class="r-in"><span><span class="co">#......................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu"><a href="aoi_geom_save_tif_matches.html">aoi_geom_save_tif_matches</a></span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span></span>
+<span class="r-in"><span>                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span></span>
+<span class="r-in"><span>                                                        resolution <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#........................................</span></span></span>
+<span class="r-in"><span><span class="co"># create a Virtual Raster (VRT) file from</span></span></span>
+<span class="r-in"><span><span class="co"># the 90 meter downloaded .tif files</span></span></span>
+<span class="r-in"><span><span class="co">#........................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{DIR_SAVE}.vrt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">create_VRT_from_dir</span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span></span>
+<span class="r-in"><span>                                             output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,</span></span>
+<span class="r-in"><span>                                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#......................................................</span></span></span>
+<span class="r-in"><span><span class="co"># load the saved VRT file as raster (which might</span></span></span>
+<span class="r-in"><span><span class="co"># consist of multiple files, i.e. a mosaic) and plot it</span></span></span>
+<span class="r-in"><span><span class="co">#......................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="va">VRT_out</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">sp</span><span class="fu">::</span><span class="fu">plot</span><span class="op">(</span><span class="va">rst</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -159,7 +159,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -63,14 +63,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span>
-  <span class="va">sf_or_file</span>,
-  <span class="va">dir_save_tifs</span>,
-  resolution <span class="op">=</span> <span class="fl">90</span>,
-  crs_value <span class="op">=</span> <span class="fl">4326</span>,
-  threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span></span>
+<span>  <span class="va">sf_or_file</span>,</span>
+<span>  <span class="va">dir_save_tifs</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">90</span>,</span>
+<span>  crs_value <span class="op">=</span> <span class="fl">4326</span>,</span>
+<span>  threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -121,45 +121,45 @@ and an existing tile-grid of the Digital Elevation Model (DEM)</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.......................................</span></span>
-<span class="r-in"><span class="co"># create a directory to save the .tif</span></span>
-<span class="r-in"><span class="co"># files based on a Well Known Text (WKT)</span></span>
-<span class="r-in"><span class="co"># of a sample Area of Interest (AOI)</span></span>
-<span class="r-in"><span class="co">#.......................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'HOME'</span><span class="op">)</span>, <span class="st">'DIR_SAVE_DEM'</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">WKT</span><span class="op">=</span><span class="st">'POLYGON((61.5234 27.0591, 63.6328 27.0591, 63.6328 28.1495, 61.5234 28.1495, 61.5234 27.0591))'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="va">sf_obj</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.............</span></span>
-<span class="r-in"><span class="co"># 90 meter DEM</span></span>
-<span class="r-in"><span class="co">#.............</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span>
-<span class="r-in">                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>
-<span class="r-in">                                                        resolution <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.............</span></span>
-<span class="r-in"><span class="co"># 30 meter DEM</span></span>
-<span class="r-in"><span class="co">#.............</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span>
-<span class="r-in">                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>
-<span class="r-in">                                                        resolution <span class="op">=</span> <span class="fl">30</span>,</span>
-<span class="r-in">                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.......................................</span></span></span>
+<span class="r-in"><span><span class="co"># create a directory to save the .tif</span></span></span>
+<span class="r-in"><span><span class="co"># files based on a Well Known Text (WKT)</span></span></span>
+<span class="r-in"><span><span class="co"># of a sample Area of Interest (AOI)</span></span></span>
+<span class="r-in"><span><span class="co">#.......................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'HOME'</span><span class="op">)</span>, <span class="st">'DIR_SAVE_DEM'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">WKT</span><span class="op">=</span><span class="st">'POLYGON((61.5234 27.0591, 63.6328 27.0591, 63.6328 28.1495, 61.5234 28.1495, 61.5234 27.0591))'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sf_obj</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="va">sf_obj</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.............</span></span></span>
+<span class="r-in"><span><span class="co"># 90 meter DEM</span></span></span>
+<span class="r-in"><span><span class="co">#.............</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span></span>
+<span class="r-in"><span>                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span></span>
+<span class="r-in"><span>                                                        resolution <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.............</span></span></span>
+<span class="r-in"><span><span class="co"># 30 meter DEM</span></span></span>
+<span class="r-in"><span><span class="co">#.............</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">save_matches</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu">aoi_geom_save_tif_matches</span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sf_obj</span>,</span></span>
+<span class="r-in"><span>                                                        dir_save_tifs <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span></span>
+<span class="r-in"><span>                                                        resolution <span class="op">=</span> <span class="fl">30</span>,</span></span>
+<span class="r-in"><span>                                                        crs_value <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                                                        threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                                        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -174,7 +174,7 @@ and an existing tile-grid of the Digital Elevation Model (DEM)</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
