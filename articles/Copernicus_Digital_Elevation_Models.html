@@ -75,10 +75,11 @@
 
       
 
-      </header><script src="Copernicus_Digital_Elevation_Models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Copernicus Digital Elevation Models (an example use case)</h1>
+      <h1 data-toc-skip>Copernicus Digital Elevation Models (an example
+use case)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/CopernicusDEM/blob/HEAD/vignettes/Copernicus_Digital_Elevation_Models.Rmd" class="external-link"><code>vignettes/Copernicus_Digital_Elevation_Models.Rmd</code></a></small>
@@ -89,22 +90,40 @@
     
     
 <p><br></p>
-<p>In this vignette I’ll explain how to use the <a href="https://CRAN.R-project.org/package=CopernicusDEM" class="external-link">CopernicusDEM</a> R package based on a use case of the <a href="https://www.movebank.org/cms/movebank-main" class="external-link">Movebank animal tracking data</a>. I picked animal tracking data because there is an abundance in the <em>Movebank</em> archive from all over the world. In this specific vignette I’ll use data of <strong>Wolves</strong> from the <em>northeastern Alberta</em> and <strong>Caribou</strong> from the <em>British Columbia</em> (see the reference papers at the end of the vignette for more information).</p>
+<p>In this vignette I’ll explain how to use the <a href="https://CRAN.R-project.org/package=CopernicusDEM" class="external-link">CopernicusDEM</a>
+R package based on a use case of the <a href="https://www.movebank.org/cms/movebank-main" class="external-link">Movebank animal
+tracking data</a>. I picked animal tracking data because there is an
+abundance in the <em>Movebank</em> archive from all over the world. In
+this specific vignette I’ll use data of <strong>Wolves</strong> from the
+<em>northeastern Alberta</em> and <strong>Caribou</strong> from the
+<em>British Columbia</em> (see the reference papers at the end of the
+vignette for more information).</p>
 <p><br></p>
-<p>The following wrapped code snippet creates the <a href="https://github.com/rstudio/leaflet" class="external-link">leaflet</a> and <a href="https://github.com/r-tmap/tmap" class="external-link">tmap</a> maps of this vignette, and it does the following:</p>
+<p>The following wrapped code snippet creates the <a href="https://github.com/rstudio/leaflet" class="external-link">leaflet</a> and <a href="https://github.com/r-tmap/tmap" class="external-link">tmap</a> maps of this vignette,
+and it does the following:</p>
 <ul>
-<li>it loads the required files (<strong>Alberta_Wolves.csv</strong> and <strong>Mountain_caribou.csv</strong>)</li>
+<li>it loads the required files (<strong>Alberta_Wolves.csv</strong> and
+<strong>Mountain_caribou.csv</strong>)</li>
 <li>it iterates over the files</li>
 <li>inside the for-loop for each file (and animal) separately
 <ul>
-<li>it keeps the required columns (‘longitude’, ‘latitude’, ‘timestamp’, ‘individual_local_identifier’, ‘individual-taxon-canonical-name’)</li>
+<li>it keeps the required columns (‘longitude’, ‘latitude’, ‘timestamp’,
+‘individual_local_identifier’, ‘individual-taxon-canonical-name’)</li>
 <li>it builds a simple features object of the input data.tables</li>
 <li>it creates a bounding box of the coordinate points</li>
-<li>it extends the boundaries of the bounding box by 250 meters (so that points close to the boundaries are visible too)</li>
-<li>it downloads and saves to a temporary directory the 30 meter elevation data for the Area of Interest (either for the ‘Wolves’ or the ‘Tarandus’)</li>
-<li>it creates a Virtual Raster (.VRT) mosaic file of the multiple downloaded Elevation .tif files</li>
-<li>it crops the Digital Elevation Model (DEM) using the previously created bounding box (the downloaded DEM’s cover a bigger area, because they consist of fixed grid tiles)</li>
-<li>it saves the <strong>tmap</strong> of each processed input file and the <strong>data.table</strong> which is required for the leaflet map to a separate list</li>
+<li>it extends the boundaries of the bounding box by 250 meters (so that
+points close to the boundaries are visible too)</li>
+<li>it downloads and saves to a temporary directory the 30 meter
+elevation data for the Area of Interest (either for the ‘Wolves’ or the
+‘Tarandus’)</li>
+<li>it creates a Virtual Raster (.VRT) mosaic file of the multiple
+downloaded Elevation .tif files</li>
+<li>it crops the Digital Elevation Model (DEM) using the previously
+created bounding box (the downloaded DEM’s cover a bigger area, because
+they consist of fixed grid tiles)</li>
+<li>it saves the <strong>tmap</strong> of each processed input file and
+the <strong>data.table</strong> which is required for the leaflet map to
+a separate list</li>
 </ul>
 </li>
 </ul>
@@ -199,7 +218,9 @@
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="progress_logs.png"></p>
 <p><br></p>
-<p>Now, based on the saved data.tables we can create first the <strong>leaflet map</strong> to view the data of both animals in the same map,</p>
+<p>Now, based on the saved data.tables we can create first the
+<strong>leaflet map</strong> to view the data of both animals in the
+same map,</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#.....................................</span></span>
@@ -226,7 +247,13 @@
 <p><br></p>
 <p><img src="leaflet_map.png"></p>
 <p><br></p>
-<p>The tracking data of the <em>Caribou</em> are on a higher elevation compared to the data of the <em>Wolves</em>. This is verified by the next <em>tmap</em> which includes the Elevation legend (<strong>layer</strong>). The additional legend shows the <strong>individual identifier</strong> of the animal - for the <strong>Tarandus</strong> there are <strong>138</strong> unique id’s whereas</p>
+<p>The tracking data of the <em>Caribou</em> are on a higher elevation
+compared to the data of the <em>Wolves</em>. This is verified by the
+next <em>tmap</em> which includes the Elevation legend
+(<strong>layer</strong>). The additional legend shows the
+<strong>individual identifier</strong> of the animal - for the
+<strong>Tarandus</strong> there are <strong>138</strong> unique id’s
+whereas</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmap_data</span><span class="op">$</span><span class="va">`Rangifer tarandus`</span>                            <span class="co"># caribou</span></span></code></pre></div>
@@ -240,24 +267,41 @@
 <p><br></p>
 <p><img src="wolves_elevation.png"></p>
 <p><br></p>
-<p>Elevation data using the <strong>CopernicusDEM</strong> R package can be visualized also in <strong>3-dimensional space</strong>. For the corresponding use case have a look to the <a href="https://CRAN.R-project.org/package=fitbitViz" class="external-link">Vignette of the fitbitViz</a> package which uses internally the <a href="https://github.com/tylermorganwall/rayshader" class="external-link">Rayshader</a> package.</p>
+<p>Elevation data using the <strong>CopernicusDEM</strong> R package can
+be visualized also in <strong>3-dimensional space</strong>. For the
+corresponding use case have a look to the <a href="https://CRAN.R-project.org/package=fitbitViz" class="external-link">Vignette of the
+fitbitViz</a> package which uses internally the <a href="https://github.com/tylermorganwall/rayshader" class="external-link">Rayshader</a>
+package.</p>
 <p><br></p>
 <p><strong>Movebank References</strong>:</p>
 <ul>
 <li>
-<a href="https://www.datarepository.movebank.org/handle/10255/move.949" class="external-link">Latham Alberta Wolves</a>
+<a href="https://www.datarepository.movebank.org/handle/10255/move.949" class="external-link">Latham
+Alberta Wolves</a>
 <ul>
-<li>Latham ADM (2009) Wolf ecology and caribou-primary prey-wolf spatial relationships in low productivity peatland complexes in northeastern Alberta. Dissertation. ProQuest Dissertations Publishing, University of Alberta, Canada, NR55419, 197 p. url:<a href="https://www.proquest.com/docview/305051214" class="external-link uri">https://www.proquest.com/docview/305051214</a>
+<li>Latham ADM (2009) Wolf ecology and caribou-primary prey-wolf spatial
+relationships in low productivity peatland complexes in northeastern
+Alberta. Dissertation. ProQuest Dissertations Publishing, University of
+Alberta, Canada, NR55419, 197 p. url:<a href="https://www.proquest.com/docview/305051214" class="external-link uri">https://www.proquest.com/docview/305051214</a>
 </li>
-<li>Latham ADM and Boutin S (2019) Data from: Wolf ecology and caribou-primary prey-wolf spatial relationships in low productivity peatland complexes in northeastern Alberta. Movebank Data Repository. :10.5441/001/1.7vr1k987</li>
+<li>Latham ADM and Boutin S (2019) Data from: Wolf ecology and
+caribou-primary prey-wolf spatial relationships in low productivity
+peatland complexes in northeastern Alberta. Movebank Data Repository.
+:10.5441/001/1.7vr1k987</li>
 </ul>
 </li>
 <li>
-<a href="https://www.datarepository.movebank.org/handle/10255/move.957" class="external-link">Mountain caribou in British Columbia-radio-transmitter</a>
+<a href="https://www.datarepository.movebank.org/handle/10255/move.957" class="external-link">Mountain
+caribou in British Columbia-radio-transmitter</a>
 <ul>
-<li>BC Ministry of Environment (2014) Science update for the South Peace Northern Caribou (Rangifer tarandus caribou pop. 15) in British Columbia. Victoria, BC. 43 p. <a href="https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf" class="external-link uri">https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf</a> url:<a href="https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf" class="external-link uri">https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf</a>
+<li>BC Ministry of Environment (2014) Science update for the South Peace
+Northern Caribou (Rangifer tarandus caribou pop. 15) in British
+Columbia. Victoria, BC. 43 p. <a href="https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf" class="external-link uri">https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf</a>
+url:<a href="https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf" class="external-link uri">https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf</a>
 </li>
-<li>Seip DR and Price E (2019) Data from: Science update for the South Peace Northern Caribou (Rangifer tarandus caribou pop. 15) in British Columbia. Movebank Data Repository. :10.5441/001/1.p5bn656k</li>
+<li>Seip DR and Price E (2019) Data from: Science update for the South
+Peace Northern Caribou (Rangifer tarandus caribou pop. 15) in British
+Columbia. Movebank Data Repository. :10.5441/001/1.p5bn656k</li>
 </ul>
 </li>
 </ul>
