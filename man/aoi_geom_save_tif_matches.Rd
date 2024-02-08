@@ -85,4 +85,6 @@ save_matches = CopernicusDEM::aoi_geom_save_tif_matches(sf_or_file = sf_obj,
 https://registry.opendata.aws/copernicus-dem/
 
 https://copernicus-dem-30m.s3.amazonaws.com/readme.html
+
+https://spacedata.copernicus.eu/en/web/guest/collections/copernicus-digital-elevation-model/
 }

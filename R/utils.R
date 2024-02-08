@@ -56,6 +56,8 @@ compute_elapsed_time = function(time_start) {
 #' https://registry.opendata.aws/copernicus-dem/
 #'
 #' https://copernicus-dem-30m.s3.amazonaws.com/readme.html
+#' 
+#' https://spacedata.copernicus.eu/en/web/guest/collections/copernicus-digital-elevation-model/
 #'
 #' @export
 #'

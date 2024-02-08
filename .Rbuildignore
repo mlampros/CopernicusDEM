@@ -1,3 +1,4 @@
 ^\.ccache$
+^\.git$
 ^\.github$
 ^tic\.R$

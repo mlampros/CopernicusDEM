@@ -232,10 +232,10 @@ Elevation data using the **CopernicusDEM** R package can be visualized also in *
 
 **Movebank References**:
 
-* [Latham Alberta Wolves](https://www.datarepository.movebank.org/handle/10255/move.949)
+* [Latham Alberta Wolves](https://datarepository.movebank.org/handle/10255/move.949)
     * Latham ADM (2009) Wolf ecology and caribou-primary prey-wolf spatial relationships in low productivity peatland complexes in northeastern Alberta. Dissertation. ProQuest Dissertations Publishing, University of Alberta, Canada, NR55419, 197 p. url:https://www.proquest.com/docview/305051214
     * Latham ADM and Boutin S (2019) Data from: Wolf ecology and caribou-primary prey-wolf spatial relationships in low productivity peatland complexes in northeastern Alberta. Movebank Data Repository. \doi:10.5441/001/1.7vr1k987
-* [Mountain caribou in British Columbia-radio-transmitter](https://www.datarepository.movebank.org/handle/10255/move.957)
+* [Mountain caribou in British Columbia-radio-transmitter](https://datarepository.movebank.org/handle/10255/move.957)
     * BC Ministry of Environment (2014) Science update for the South Peace Northern Caribou (Rangifer tarandus caribou pop. 15) in British Columbia. Victoria, BC. 43 p. https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf url:https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/wildlife-wildlife-habitat/caribou/science_update_final_from_web_jan_2014.pdf
     * Seip DR and Price E (2019) Data from: Science update for the South Peace Northern Caribou (Rangifer tarandus caribou pop. 15) in British Columbia. Movebank Data Repository. \doi:10.5441/001/1.p5bn656k
     
