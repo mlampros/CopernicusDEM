@@ -1,4 +1,9 @@
 
+## CopernicusDEM 1.0.4
+
+* I updated the "Copernicus_Digital_Elevation_Models.Rmd" vignette after a major revision of the "tmap" R package. The users of the CopernicusDEM have to install the latest version of tmap
+
+
 ## CopernicusDEM 1.0.3
 
 * I renamed the *inst/COPYRIGHTS* file to *inst/COPYRIGHTS.pdf* (CRAN Team message)

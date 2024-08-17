@@ -114,8 +114,9 @@ If you use the **CopernicusDEM** R package in your paper or research please cite
 @Manual{,
   title = {{CopernicusDEM}: Copernicus Digital Elevation Models},
   author = {Lampros Mouselimis},
-  year = {2022},
-  note = {R package version 1.0.3 produced using Copernicus
+  year = {2024},
+  doi = 10.32614/CRAN.package.CopernicusDEM,
+  note = {R package version 1.0.4 produced using Copernicus
     WorldDEMTM-90 DLR e.V. 2010-2014 and Airbus Defence and Space
     GmbH 2014-2018 provided under COPERNICUS by the European Union
     and ESA; all rights reserved},
