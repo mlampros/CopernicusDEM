@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Copernicus Digital Elevation Models • CopernicusDEM</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -19,7 +19,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CopernicusDEM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -62,7 +62,7 @@
 <li>
   <a href="https://github.com/mlampros/CopernicusDEM/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -73,7 +73,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
@@ -89,13 +89,13 @@
 <p>This R package uses the command line <strong>awscli</strong> internally, which has to be installed first in the Operating System.</p>
 <p><br></p>
 <p>On <strong>Ubuntu</strong> this can be done using:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sudo apt install <span class="sc">-</span>y awscli</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>sudo apt install <span class="sc">-</span>y awscli</span></code></pre></div>
 <p><br></p>
 <p>On <strong>Macintosh</strong> use,</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>brew install awscli</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>brew install awscli</span></code></pre></div>
 <p><br></p>
 <p>and on <strong>Windows 10</strong> (tested) open the command line (cmd) and type,</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>msiexec.exe <span class="sc">/</span>i https<span class="sc">:</span><span class="er">//</span>awscli.amazonaws.com<span class="sc">/</span>AWSCLIV2.msi</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>msiexec.exe <span class="sc">/</span>i https<span class="sc">:</span><span class="er">//</span>awscli.amazonaws.com<span class="sc">/</span>AWSCLIV2.msi</span></code></pre></div>
 <p>which will open a new window (‘AWS command line interface v2 Setup’), then click twice on ‘next’ and then ‘install’ and ‘allow the device to make changes’ and once another window pop-ups click ‘finish’</p>
 <p><br></p>
 <p>Then verify the installation using,</p>
@@ -103,14 +103,14 @@
 <code class="sourceCode R"><span><span class="va">aws</span> <span class="op">-</span><span class="op">-</span><span class="va">version</span></span></code></pre></div>
 <p><br></p>
 <p>and proceed to <strong>configure aws</strong> using either</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>aws configure</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>aws configure</span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>export AWS_ACCESS_KEY_ID<span class="ot">=</span>xxxxxxxxx</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>export AWS_SECRET_ACCESS_KEY<span class="ot">=</span>xxxxxxxxx</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>export AWS_DEFAULT_REGION<span class="ot">=</span>eu<span class="sc">-</span>central<span class="dv">-1</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>export AWS_ACCESS_KEY_ID<span class="ot">=</span>xxxxxxxxx</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>export AWS_SECRET_ACCESS_KEY<span class="ot">=</span>xxxxxxxxx</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>export AWS_DEFAULT_REGION<span class="ot">=</span>eu<span class="sc">-</span>central<span class="dv">-1</span></span></code></pre></div>
 <p><br></p>
 <p>To check that <strong>awscli</strong> was installed and configured successfully run the following line in the command line. It returns the first 10 files of the 90 meter DEM product (for verification purposes),</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>aws s3 ls s3<span class="sc">:</span><span class="er">//</span>copernicus<span class="sc">-</span>dem<span class="sc">-</span>90m <span class="sc">|</span> head <span class="sc">-</span>n <span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>aws s3 ls s3<span class="sc">:</span><span class="er">//</span>copernicus<span class="sc">-</span>dem<span class="dv">-90</span>m <span class="sc">|</span> head <span class="sc">-</span>n <span class="dv">10</span></span></code></pre></div>
 <p><br></p>
 <p>To install the package from CRAN use,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -126,16 +126,17 @@
 <p><br></p>
 <p>If you use the <strong>CopernicusDEM</strong> R package in your paper or research please cite:</p>
 <p><br></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">=</span> {{CopernicusDEM}<span class="sc">:</span> Copernicus Digital Elevation Models},</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  author <span class="ot">=</span> {Lampros Mouselimis},</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2022</span>},</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="fl">0.2</span> produced using Copernicus</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    WorldDEMTM<span class="dv">-90</span> DLR e.V. <span class="dv">2010-2014</span> and Airbus Defence and Space</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    GmbH <span class="dv">2014-2018</span> provided under COPERNICUS by the European Union</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    and ESA; all rights reserved},</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>CRAN.R<span class="sc">-</span>project.org<span class="sc">/</span>package<span class="ot">=</span>CopernicusDEM},</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  title <span class="ot">=</span> {{CopernicusDEM}<span class="sc">:</span> Copernicus Digital Elevation Models},</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  author <span class="ot">=</span> {Lampros Mouselimis},</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2024</span>},</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  doi <span class="ot">=</span> <span class="fl">10.32614</span><span class="sc">/</span>CRAN.package.CopernicusDEM,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="fl">0.4</span> produced using Copernicus</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    WorldDEMTM<span class="dv">-90</span> DLR e.V. <span class="dv">2010-2014</span> and Airbus Defence and Space</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    GmbH <span class="dv">2014-2018</span> provided under COPERNICUS by the European Union</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>    and ESA; all rights reserved},</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>CRAN.R<span class="sc">-</span>project.org<span class="sc">/</span>package<span class="ot">=</span>CopernicusDEM},</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>}</span></code></pre></div>
 <p><br></p>
 </div>
 </div>
@@ -195,16 +196,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
