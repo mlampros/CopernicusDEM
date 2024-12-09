@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CopernicusDEM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ this specific vignette I’ll use data of <strong>Wolves</strong> from the
 <em>British Columbia</em> (see the reference papers at the end of the
 vignette for more information).</p>
 <p><br></p>
-<p>The following wrapped code snippet creates the <a href="https://github.com/rstudio/leaflet" class="external-link">leaflet</a> and <a href="https://github.com/r-tmap/tmap" class="external-link">tmap</a> maps of this vignette,
+<p>The following wrapped code snippet creates the maps of this vignette,
 and it does the following:</p>
 <ul>
 <li>it loads the required files (<strong>Alberta_Wolves.csv</strong> and
@@ -120,9 +120,8 @@ downloaded Elevation .tif files</li>
 <li>it crops the Digital Elevation Model (DEM) using the previously
 created bounding box (the downloaded DEM’s cover a bigger area, because
 they consist of fixed grid tiles)</li>
-<li>it saves the <strong>tmap</strong> of each processed input file and
-the <strong>data.table</strong> which is required for the leaflet map to
-a separate list</li>
+<li>it uses the <strong>mapview</strong> R package to visualize the
+results</li>
 </ul>
 </li>
 </ul>
@@ -136,103 +135,126 @@ a separate list</li>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'vignette_data/Mountain_caribou.csv'</span>, package <span class="op">=</span> <span class="st">"CopernicusDEM"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">leafgl_data</span> <span class="op">=</span> <span class="va">tmap_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">taxon_data</span> <span class="op">=</span> <span class="va">mapv_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">FILE</span> <span class="kw">in</span> <span class="va">files</span><span class="op">)</span> <span class="op">{</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"Processing of the '{basename(FILE)}' file ..."</span><span class="op">)</span>, <span class="st">'\n'</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">dtbl</span> <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="va">FILE</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">dtbl</span> <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="va">FILE</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  <span class="va">cols</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'location-long'</span>, <span class="st">'location-lat'</span>, <span class="st">'timestamp'</span>, <span class="st">'individual-local-identifier'</span>, </span>
 <span>           <span class="st">'individual-taxon-canonical-name'</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="va">dtbl_subs</span> <span class="op">=</span> <span class="va">dtbl</span><span class="op">[</span>, <span class="va">..cols</span><span class="op">]</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl_subs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'longitude'</span>, <span class="st">'latitude'</span>, <span class="st">'timestamp'</span>, <span class="st">'individual_local_identifier'</span>,</span>
 <span>                          <span class="st">'individual-taxon-canonical-name'</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">leafgl_data</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dtbl_subs</span><span class="op">$</span><span class="va">`individual-taxon-canonical-name`</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="va">dtbl_subs</span></span>
-<span></span>
+<span>  </span>
+<span>  <span class="va">taxon_data</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dtbl_subs</span><span class="op">$</span><span class="va">`individual-taxon-canonical-name`</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="va">dtbl_subs</span></span>
+<span>  </span>
 <span>  <span class="va">dtbl_subs_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">dtbl_subs</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="va">sf_rst_ext</span> <span class="op">=</span> <span class="fu">fitbitViz</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fitbitViz/man/extend_AOI_buffer.html" class="external-link">extend_AOI_buffer</a></span><span class="op">(</span>dat_gps_tcx <span class="op">=</span> <span class="va">dtbl_subs_sf</span>,</span>
 <span>                                            buffer_in_meters <span class="op">=</span> <span class="fl">250</span>,</span>
 <span>                                            CRS <span class="op">=</span> <span class="fl">4326</span>,</span>
 <span>                                            verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="co">#................................................................</span></span>
 <span>  <span class="co"># Download the Copernicus DEM 30m elevation data because it has</span></span>
 <span>  <span class="co"># a better resolution, it takes a bit longer to download because</span></span>
 <span>  <span class="co"># the .tif file size is bigger</span></span>
 <span>  <span class="co">#...............................................................</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="va">dem_dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dem_dir</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">sfc_obj</span> <span class="op">=</span> <span class="va">sf_rst_ext</span><span class="op">$</span><span class="va">sfc_obj</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="va">dem30</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu"><a href="../reference/aoi_geom_save_tif_matches.html">aoi_geom_save_tif_matches</a></span><span class="op">(</span>sf_or_file <span class="op">=</span> <span class="va">sfc_obj</span>,</span>
 <span>                                                   dir_save_tifs <span class="op">=</span> <span class="va">dem_dir</span>,</span>
 <span>                                                   resolution <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>                                                   crs_value <span class="op">=</span> <span class="fl">4326</span>,</span>
 <span>                                                   threads <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                                                   verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="va">TIF</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">dem_dir</span>, pattern <span class="op">=</span> <span class="st">'.tif'</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">TIF</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span></span>
+<span>    </span>
 <span>    <span class="co">#....................................................</span></span>
 <span>    <span class="co"># create a .VRT file if I have more than 1 .tif files</span></span>
 <span>    <span class="co">#....................................................</span></span>
-<span></span>
+<span>    </span>
 <span>    <span class="va">file_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dem_dir</span>, <span class="st">'VRT_mosaic_FILE.vrt'</span><span class="op">)</span></span>
-<span></span>
+<span>    </span>
 <span>    <span class="va">vrt_dem30</span> <span class="op">=</span> <span class="fu">CopernicusDEM</span><span class="fu">::</span><span class="fu"><a href="../reference/create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">dem_dir</span>,</span>
 <span>                                                   output_path_VRT <span class="op">=</span> <span class="va">file_out</span>,</span>
 <span>                                                   verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span></span>
+<span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">TIF</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span></span>
+<span>    </span>
 <span>    <span class="co">#..................................................</span></span>
 <span>    <span class="co"># if I have a single .tif file keep the first index</span></span>
 <span>    <span class="co">#..................................................</span></span>
-<span></span>
+<span>    </span>
 <span>    <span class="va">file_out</span> <span class="op">=</span> <span class="va">TIF</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
-<span></span>
+<span>  </span>
+<span>  <span class="co"># Crop the DEM raster</span></span>
 <span>  <span class="va">raysh_rst</span> <span class="op">=</span> <span class="fu">fitbitViz</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fitbitViz/man/crop_DEM.html" class="external-link">crop_DEM</a></span><span class="op">(</span>tif_or_vrt_dem_file <span class="op">=</span> <span class="va">file_out</span>,</span>
 <span>                                  sf_buffer_obj <span class="op">=</span> <span class="va">sfc_obj</span>,</span>
 <span>                                  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># convert to character to receive the correct labels in the 'tmap' object</span></span>
-<span>  <span class="va">dtbl_subs_sf</span><span class="op">$</span><span class="va">individual_local_identifier</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">dtbl_subs_sf</span><span class="op">$</span><span class="va">individual_local_identifier</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># use the latest version of the "tmap" R package (greater than version "3.99") </span></span>
-<span>  <span class="co"># open with interactive viewer</span></span>
-<span>  <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tmap_mode.html" class="external-link">tmap_mode</a></span><span class="op">(</span><span class="st">"view"</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="va">map_coords</span> <span class="op">=</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span>shp <span class="op">=</span> <span class="va">dtbl_subs_sf</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_dots</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">'individual_local_identifier'</span><span class="op">)</span></span>
+<span>  <span class="co"># Downsample the raster to make the visualization feasible</span></span>
+<span>  <span class="va">raysh_rst_downsample</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">raysh_rst</span>, </span>
+<span>                                          fact <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>                                          fun <span class="op">=</span> <span class="va">mean</span>,</span>
+<span>                                          cores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="va">map_coords</span> <span class="op">=</span> <span class="va">map_coords</span> <span class="op">+</span> <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span>shp <span class="op">=</span> <span class="va">raysh_rst</span>, is.master <span class="op">=</span> <span class="cn">FALSE</span>, name <span class="op">=</span> <span class="st">'Elevation'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">tmap</span><span class="fu">::</span><span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_raster.html" class="external-link">tm_raster</a></span><span class="op">(</span>col_alpha <span class="op">=</span> <span class="fl">0.65</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">tmap_data</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dtbl_subs</span><span class="op">$</span><span class="va">`individual-taxon-canonical-name`</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="va">map_coords</span></span>
+<span>  <span class="co"># create the Elevation OpenTopoMap</span></span>
+<span>  <span class="va">mp_elev</span> <span class="op">=</span> <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">raysh_rst_downsample</span>,</span>
+<span>                             col.regions <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">terrain.colors</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>                             layer.name <span class="op">=</span> <span class="st">'Elevation'</span>,</span>
+<span>                             map.types <span class="op">=</span> <span class="st">'OpenTopoMap'</span>,</span>
+<span>                             legend <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># get the unique colors of the identifier</span></span>
+<span>  <span class="va">unq_color_ids</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dtbl_subs_sf</span><span class="op">$</span><span class="va">individual_local_identifier</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">unq_color_ids</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="va">colors_ids</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors</a></span><span class="op">(</span>distinct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>                      size <span class="op">=</span> <span class="va">unq_color_ids</span>, </span>
+<span>                      replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># convert the identifier to a factor</span></span>
+<span>  <span class="va">dtbl_subs_sf</span><span class="op">$</span><span class="va">individual_local_identifier</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">dtbl_subs_sf</span><span class="op">$</span><span class="va">individual_local_identifier</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># visualize the identifier</span></span>
+<span>  <span class="va">mp_ids</span> <span class="op">=</span> <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="va">dtbl_subs_sf</span>, </span>
+<span>                            zcol <span class="op">=</span> <span class="st">'individual_local_identifier'</span>,</span>
+<span>                            layer.name <span class="op">=</span> <span class="st">'identifier'</span>,</span>
+<span>                            col.regions <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colors_ids</span>, space <span class="op">=</span> <span class="st">"Lab"</span><span class="op">)</span>,</span>
+<span>                            legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">unq_color_ids</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># combine both mapview objects</span></span>
+<span>  <span class="va">mp_both</span> <span class="op">=</span> <span class="va">mp_elev</span> <span class="op">+</span> <span class="va">mp_ids</span></span>
+<span>  </span>
+<span>  <span class="va">mapv_data</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dtbl_subs</span><span class="op">$</span><span class="va">`individual-taxon-canonical-name`</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="va">mp_both</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="progress_logs.png"></p>
 <p><br></p>
 <p>Now, based on the saved data.tables we can create first the
-<strong>leaflet map</strong> to view the data of both animals in the
-same map,</p>
+<strong>map</strong> (using the mapview R package) to view the data of
+both animals in the same map,</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#.....................................</span></span>
-<span><span class="co"># create the 'leafGl' of both datasets</span></span>
-<span><span class="co">#.....................................</span></span>
+<code class="sourceCode R"><span><span class="co">#.............................................</span></span>
+<span><span class="co"># create the 'mapview' object of both datasets</span></span>
+<span><span class="co">#.............................................</span></span>
 <span></span>
-<span><span class="va">dtbl_all</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">leafgl_data</span><span class="op">$</span><span class="va">`Canis lupus`</span>, <span class="va">leafgl_data</span><span class="op">$</span><span class="va">`Rangifer tarandus`</span><span class="op">)</span></span>
+<span><span class="va">dtbl_all</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">taxon_data</span><span class="op">$</span><span class="va">`Canis lupus`</span>, <span class="va">taxon_data</span><span class="op">$</span><span class="va">`Rangifer tarandus`</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># see the number of observations for each animal</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">dtbl_all</span><span class="op">$</span><span class="va">`individual-taxon-canonical-name`</span><span class="op">)</span></span>
@@ -240,33 +262,29 @@ same map,</p>
 <span><span class="co"># create an 'sf' object of both data.tables</span></span>
 <span><span class="va">dat_gps_tcx</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">dtbl_all</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lft</span> <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">lft</span> <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addProviderTiles.html" class="external-link">addProviderTiles</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">lft</span>, provider <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="va"><a href="https://rstudio.github.io/leaflet/reference/providers.html" class="external-link">providers</a></span><span class="op">$</span><span class="va">OpenTopoMap</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">lft</span> <span class="op">=</span> <span class="fu">leafgl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leafgl/man/addGlPoints.html" class="external-link">addGlPoints</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">lft</span>,</span>
-<span>                          data <span class="op">=</span> <span class="va">dat_gps_tcx</span>,</span>
-<span>                          opacity <span class="op">=</span> <span class="fl">1.0</span>,</span>
-<span>                          fillColor <span class="op">=</span> <span class="st">'individual-taxon-canonical-name'</span>,</span>
-<span>                          popup <span class="op">=</span> <span class="st">'individual-taxon-canonical-name'</span><span class="op">)</span></span>
+<span><span class="va">lft</span> <span class="op">=</span> <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat_gps_tcx</span>,</span>
+<span>                                zcol <span class="op">=</span> <span class="st">'individual-taxon-canonical-name'</span>,</span>
+<span>                                map.types <span class="op">=</span> <span class="st">'OpenTopoMap'</span>,</span>
+<span>                                layer.name <span class="op">=</span> <span class="st">'taxon-canonical-name'</span>,</span>
+<span>                                legend <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">lft</span></span></code></pre></div>
 <p><br></p>
 <p><img src="leaflet_map.png"></p>
 <p><br></p>
 <p>The tracking data of the <em>Caribou</em> are on a higher elevation
 compared to the data of the <em>Wolves</em>. This is verified by the
-next <em>tmap</em> which includes the Elevation legend
-(<strong>layer</strong>). The additional legend shows the
-<strong>individual identifier</strong> of the animal - for the
-<strong>Tarandus</strong> there are <strong>138</strong> unique id’s
-whereas</p>
+next map which includes the Elevation legend (<strong>layer</strong>).
+The additional legend shows the <strong>individual identifier</strong>
+of the animal - for the <strong>Tarandus</strong> there are
+<strong>138</strong> unique id’s whereas</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tmap_data</span><span class="op">$</span><span class="va">`Rangifer tarandus`</span>                            <span class="co"># caribou</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mapv_data</span><span class="op">$</span><span class="va">`Rangifer tarandus`</span>                           <span class="co"># caribou</span></span></code></pre></div>
 <p><br></p>
 <p><img src="tarandus_elevation.png"></p>
 <p><br></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tmap_data</span><span class="op">$</span><span class="va">`Canis lupus`</span>                                  <span class="co"># wolves</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mapv_data</span><span class="op">$</span><span class="va">`Canis lupus`</span>                                 <span class="co"># wolves</span></span></code></pre></div>
 <p><br></p>
 <p>for the <strong>Wolves</strong> only <strong>12</strong>,</p>
 <p><br></p>
@@ -328,7 +346,7 @@ Columbia. Movebank Data Repository. :10.5441/001/1.p5bn656k</li>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
