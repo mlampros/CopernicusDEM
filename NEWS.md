@@ -1,4 +1,10 @@
 
+## CopernicusDEM 1.0.5
+
+* I replaced the "tmap", "leaflet" and "leafgl" in the vignette with the "mapview" R package (the user has to install the latest "mapview" version from the [Github repository](https://github.com/r-spatial/mapview))
+* I included the "terra" R package in the Suggests section of the DESCRIPTION file.
+
+
 ## CopernicusDEM 1.0.4
 
 * I updated the "Copernicus_Digital_Elevation_Models.Rmd" vignette after a major revision of the "tmap" R package. The users of the CopernicusDEM have to install the latest version of tmap
